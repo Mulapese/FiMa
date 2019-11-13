@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
-    public Button createNewFolder;
+   // public Button createNewFolder;
 
     private boolean arePermissionDenied() {
         int p = 0;
@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        createNewFolder = getView().findViewById(R.id.newFolder);
+        //createNewFolder = getView().findViewById(R.id.newFolder);
     }
 
     // Get extension of file
