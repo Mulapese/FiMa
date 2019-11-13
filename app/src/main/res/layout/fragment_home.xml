@@ -15,25 +15,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="B" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:background="@color/cardview_dark_background"
-            android:paddingLeft="80dp"
-            android:paddingTop="10dp"
-            android:text="FiMa"
-            android:textColor="@color/colorPrimary"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:text="Back" />
 
         <Button
             android:id="@+id/refresh"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="R" />
+            android:text="Refresh" />
     </LinearLayout>
 
 

@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
     private int filesFoundCount;
     private Button refreshButton;
     private File dir;
-    private String currentPath;
+    public String currentPath;
     private boolean isLongClick;
     private int selectedItemIndex;
     private String copyPath;
@@ -119,14 +119,24 @@ public class HomeFragment extends Fragment {
 //        return super.onKeyDown(keyCode, event);
 //    }
 
+    public void myOnKeyDown(int keyCode){
+        final String rootPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (currentPath.equals(rootPath)) {
+                //this.finish();
+                //System.exit(0);
+            }
+            currentPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
+            refreshButton.callOnClick();
+        }
+    }
+
 
     @Override
     public void onResume() {
         super.onResume();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && arePermissionDenied()) {
             requestPermissions(PERMISSIONS, REQUEST_PERMISSIONS);
-            requestPermissions(PERMISSIONS, REQUEST_PERMISSIONS);
-           // ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSIONS);
             return;
         }
 

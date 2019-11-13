@@ -35,6 +35,7 @@ import android.view.Menu;
 import android.widget.EditText;
 
 import java.io.File;
+import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private AppBarConfiguration mAppBarConfiguration;
+   // private HomeFragment homeFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+       // homeFragment = (View) findViewById(R.id.fragment_home);
     }
 
     @Override
@@ -92,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
             case R.id.btnNewFolder:
-                HomeFragment fragment = new HomeFragment();
+                HomeFragment fragment = (HomeFragment) getVisibleFragment();
                 ((HomeFragment) fragment).createNewFolder.callOnClick();
                 return true;
             default:
@@ -100,6 +104,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public Fragment getVisibleFragment(){
+        FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if(fragments != null){
+            for(Fragment fragment : fragments){
+                if(fragment != null && fragment.isVisible())
+                    return fragment;
+            }
+        }
+        return null;
+    }
+
+    //    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if(keyCode == KeyEvent.KEYCODE_BACK){
+//            HomeFragment homeFragment = new HomeFragment();
+//            homeFragment.myOnKeyDown(keyCode);
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     @Override
     public boolean onSupportNavigateUp() {
