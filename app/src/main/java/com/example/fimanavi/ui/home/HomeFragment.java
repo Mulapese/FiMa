@@ -28,6 +28,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -60,6 +61,7 @@ public class HomeFragment extends Fragment {
     private int selectedItemIndex;
     private String copyPath;
     private static final int REQUEST_PERMISSIONS = 1234;
+    private static final int MAX_LENGTH_TITLE = 29;
     private static int PERMISSION_COUNT = 2;
     private static final String[] PERMISSIONS = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -77,6 +79,7 @@ public class HomeFragment extends Fragment {
         return false;
     }
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -131,6 +134,15 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    // Minimum the path if it is too long
+    public String minimumPath(String s){
+        if(s.length() > MAX_LENGTH_TITLE){
+            int start = s.lastIndexOf("/");
+            int end = s.length();
+            s = s.substring(0,9) + "..." + s.substring(start, end);
+        }
+        return s;
+    }
 
     @Override
     public void onResume() {
@@ -166,6 +178,7 @@ public class HomeFragment extends Fragment {
                         filesList.add(String.valueOf(files[i].getAbsolutePath()));
                     }
                     textAdapter1.setData(filesList);
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(minimumPath(currentPath));
                 }
             });
 
