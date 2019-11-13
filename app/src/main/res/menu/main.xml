@@ -10,4 +10,8 @@
         android:id="@+id/btnNewFile"
         android:orderInCategory="101"
         android:title="@string/action_btn_new_file" />
+    <item
+        android:id="@+id/refresh"
+        android:orderInCategory="101"
+        android:title="@string/action_btn_refresh" />
 </menu>

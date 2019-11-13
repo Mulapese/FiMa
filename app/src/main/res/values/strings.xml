@@ -8,6 +8,7 @@
 
     <string name="action_btn_new_folder">New Folder</string>
     <string name="action_btn_new_file">New File</string>
+    <string name="action_btn_refresh">Refresh</string>
 
 
     <string name="menu_home">Home</string>

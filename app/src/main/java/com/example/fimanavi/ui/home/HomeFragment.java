@@ -1,10 +1,7 @@
 package com.example.fimanavi.ui.home;
 
 import android.Manifest;
-import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,12 +23,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
 import com.example.fimanavi.R;
 
 import java.io.File;
@@ -43,7 +41,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
@@ -55,7 +52,7 @@ public class HomeFragment extends Fragment {
     private int filesFoundCount;
     private Button refreshButton;
     private File dir;
-    public String currentPath;
+    public String currentPath = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
     private boolean isLongClick;
     private int selectedItemIndex;
     private String copyPath;
@@ -66,6 +63,7 @@ public class HomeFragment extends Fragment {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
     public Button createNewFolder;
+
     private boolean arePermissionDenied() {
         int p = 0;
         while (p < PERMISSION_COUNT) {
@@ -78,7 +76,7 @@ public class HomeFragment extends Fragment {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -103,7 +101,7 @@ public class HomeFragment extends Fragment {
         return url.substring(url.lastIndexOf(".") + 1);
     }
 
-//    @Override
+    //    @Override
 //    public boolean onKeyDown(int keyCode, KeyEvent event) {
 //        final String rootPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
 //        if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -118,8 +116,7 @@ public class HomeFragment extends Fragment {
 //
 //        return super.onKeyDown(keyCode, event);
 //    }
-
-    public void myOnKeyDown(int keyCode){
+    public void myOnKeyDown(int keyCode) {
         final String rootPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (currentPath.equals(rootPath)) {
@@ -148,7 +145,6 @@ public class HomeFragment extends Fragment {
             final TextAdapter textAdapter1 = new TextAdapter();
             listView.setAdapter(textAdapter1);
             filesList = new ArrayList<>();
-
             // Refresh Button
             refreshButton = getView().findViewById(R.id.refresh);
             refreshButton.setOnClickListener(new View.OnClickListener() {
@@ -221,6 +217,7 @@ public class HomeFragment extends Fragment {
                     selection[position] = !selection[position];
                     textAdapter1.setSelection(selection);
                     int selectionCount = 0;
+                    getView().findViewById(R.id.bottomBar).setVisibility(View.GONE);
                     for (boolean aSelection : selection) {
                         if (aSelection) {
                             selectionCount++;
@@ -230,7 +227,7 @@ public class HomeFragment extends Fragment {
                         if (selectionCount == 1) {
                             selectedItemIndex = position;
                             getView().findViewById(R.id.btnRename).setVisibility(View.VISIBLE);
-                            if(!files[selectedItemIndex].isDirectory()){
+                            if (!files[selectedItemIndex].isDirectory()) {
                                 getView().findViewById(R.id.btnCopy).setVisibility(View.VISIBLE);
                             }
                         } else {
@@ -282,34 +279,34 @@ public class HomeFragment extends Fragment {
                 }
             });
 
-            // Create a new folder
-            createNewFolder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final AlertDialog.Builder newFolderDialog = new AlertDialog.Builder(getActivity());
-                    newFolderDialog.setTitle("New Folder");
-                    final EditText input = new EditText(getActivity());
-                    input.setInputType(InputType.TYPE_CLASS_TEXT);
-                    newFolderDialog.setView(input);
-                    newFolderDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            final File newFolder = new File(currentPath + "/" + input.getText());
-                            if (!newFolder.exists()) {
-                                newFolder.mkdir();
-                                refreshButton.callOnClick();
-                            }
-                        }
-                    });
-                    newFolderDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    newFolderDialog.show();
-                }
-            });
+//            // Create a new folder
+//            createNewFolder.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    final AlertDialog.Builder newFolderDialog = new AlertDialog.Builder(getActivity());
+//                    newFolderDialog.setTitle("New Folder");
+//                    final EditText input = new EditText(getActivity());
+//                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+//                    newFolderDialog.setView(input);
+//                    newFolderDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            final File newFolder = new File(currentPath + "/" + input.getText());
+//                            if (!newFolder.exists()) {
+//                                newFolder.mkdir();
+//                                refreshButton.callOnClick();
+//                            }
+//                        }
+//                    });
+//                    newFolderDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.cancel();
+//                        }
+//                    });
+//                    newFolderDialog.show();
+//                }
+//            });
 
             // Rename Button
             final Button renameButton = getView().findViewById(R.id.btnRename);
@@ -333,7 +330,8 @@ public class HomeFragment extends Fragment {
                             selection = new boolean[files.length];
                             textAdapter1.setSelection(selection);
                         }
-                    });renameDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    });
+                    renameDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();

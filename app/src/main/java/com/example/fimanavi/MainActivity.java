@@ -13,8 +13,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.text.InputType;
-import android.view.KeyEvent;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -26,11 +24,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.widget.EditText;
 
@@ -41,6 +42,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     private MenuItem newFolder;
+    private MenuItem refresh;
     private static final int REQUEST_PERMISSIONS = 1234;
     private static int PERMISSION_COUNT = 2;
     private static final String[] PERMISSIONS = {
@@ -49,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private AppBarConfiguration mAppBarConfiguration;
-   // private HomeFragment homeFragment;
+
+    // private HomeFragment homeFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-       // homeFragment = (View) findViewById(R.id.fragment_home);
     }
 
     @Override
@@ -85,31 +86,58 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         newFolder = menu.findItem(R.id.btnNewFolder);
+        refresh = menu.findItem(R.id.refresh);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int a = item.getItemId();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final HomeFragment homeFragment = new HomeFragment();
+        final String currentPath = homeFragment.currentPath;
+
         switch (item.getItemId()) {
             case R.id.btnNewFile:
 
                 return true;
             case R.id.btnNewFolder:
-                HomeFragment fragment = (HomeFragment) getVisibleFragment();
-                ((HomeFragment) fragment).createNewFolder.callOnClick();
+//                Snackbar.make(getWindow().getDecorView(), currentPath, Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+
+                AlertDialog.Builder newFolderDialog = new AlertDialog.Builder(this);
+                newFolderDialog.setTitle("New Folder");
+                final EditText input = new EditText(this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                newFolderDialog.setView(input);
+                newFolderDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final File newFolder = new File(currentPath + "/" + input.getText());
+                        if (!newFolder.exists()) {
+                            newFolder.mkdir();
+                        }
+                    }
+                });
+                newFolderDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                newFolderDialog.show();
+                return true;
+            case R.id.refresh:
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public Fragment getVisibleFragment(){
+    public Fragment getVisibleFragment() {
         FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
         List<Fragment> fragments = fragmentManager.getFragments();
-        if(fragments != null){
-            for(Fragment fragment : fragments){
-                if(fragment != null && fragment.isVisible())
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                if (fragment != null && fragment.isVisible())
                     return fragment;
             }
         }
