@@ -108,7 +108,7 @@ public class HomeFragment extends Fragment {
         if (!isFileManagerInitialized) {
             currentPath = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
             final String rootPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
-            final TextView pathOutput = getView().findViewById(R.id.pathOutput);
+            //final TextView pathOutput = getView().findViewById(R.id.pathOutput);
             final ListView listView = getView().findViewById(R.id.listView);
             final TextAdapter textAdapter1 = new TextAdapter();
             listView.setAdapter(textAdapter1);
@@ -119,7 +119,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //pathOutput.setText(currentPath.substring(currentPath.lastIndexOf('/') + 1));
-                    pathOutput.setText(currentPath);
+                    //pathOutput.setText(currentPath);
                     dir = new File(currentPath);
                     files = dir.listFiles();
                     Arrays.sort(files);
@@ -406,7 +406,7 @@ public class HomeFragment extends Fragment {
             holder.info.setText(item.substring(item.lastIndexOf('/') + 1));
             if (selection != null) {
                 if (selection[position]) {
-                    holder.info.setBackgroundColor(Color.argb(100, 8, 5, 5)); // Màu của Item khi được select
+                    holder.info.setBackgroundColor(Color.argb(100, 202, 221, 237)); // Màu của Item khi được select
                 } else {
                     holder.info.setBackgroundColor(Color.WHITE); // Màu của Item khi bỏ select
                 }
