@@ -33,6 +33,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.fimanavi.Common;
+import com.example.fimanavi.Constant;
 import com.example.fimanavi.FileUtils;
 import com.example.fimanavi.R;
 
@@ -60,12 +61,11 @@ public class HomeFragment extends Fragment {
     private ImageButton refreshButton;
     private ImageButton btnAZ;
     private File dir;
-    public String currentPath = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+    public String currentPath = Constant.DOWNLOAD_DIRECTORY;
     private boolean isLongClick;
     private int selectedItemIndex;
     private String copyPath;
 
-   // public Button createNewFolder;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -73,20 +73,12 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-//        final TextView textView = root.getView().findViewById(R.id.text_home);
-//        homeViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
         return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //createNewFolder = getView().findViewById(R.id.newFolder);
     }
 
     //    @Override
@@ -104,23 +96,12 @@ public class HomeFragment extends Fragment {
 //
 //        return super.onKeyDown(keyCode, event);
 //    }
-    public void myOnKeyDown(int keyCode) {
-        final String rootPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (currentPath.equals(rootPath)) {
-                //this.finish();
-                //System.exit(0);
-            }
-            currentPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
-            refreshButton.callOnClick();
-        }
-    }
 
     @Override
     public void onResume() {
         super.onResume();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Common.arePermissionDenied(this.getContext())) {
-            requestPermissions(Common.PERMISSIONS, Common.REQUEST_PERMISSIONS);
+            requestPermissions(Constant.PERMISSIONS, Constant.REQUEST_PERMISSIONS);
             return;
         }
 
@@ -446,7 +427,7 @@ public class HomeFragment extends Fragment {
     public void onRequestPermissionsResult(final int requestCode,
                                            final String[] permission, final int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permission, grantResults);
-        if (requestCode == Common.REQUEST_PERMISSIONS && grantResults.length > 0) {
+        if (requestCode == Constant.REQUEST_PERMISSIONS && grantResults.length > 0) {
             if (Common.arePermissionDenied(this.getContext())) {
                 //((ActivityManager) Objects.requireNonNull(getActivity().getSystemService(Context.ACTIVITY_SERVICE))).clearApplicationUserData();
                 //recreate();
