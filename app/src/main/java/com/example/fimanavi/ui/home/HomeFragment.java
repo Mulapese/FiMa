@@ -31,6 +31,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.fimanavi.Common;
+import com.example.fimanavi.FileUtils;
 import com.example.fimanavi.R;
 
 import java.io.File;
@@ -41,7 +43,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -59,25 +63,8 @@ public class HomeFragment extends Fragment {
     private boolean isLongClick;
     private int selectedItemIndex;
     private String copyPath;
-    private static final int REQUEST_PERMISSIONS = 1234;
-    private static final int MAX_LENGTH_TITLE = 29;
-    private static int PERMISSION_COUNT = 2;
-    private static final String[] PERMISSIONS = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
-   // public Button createNewFolder;
 
-    private boolean arePermissionDenied() {
-        int p = 0;
-        while (p < PERMISSION_COUNT) {
-            if (ActivityCompat.checkSelfPermission(getContext(), PERMISSIONS[p]) != PackageManager.PERMISSION_GRANTED) {
-                return true;
-            }
-            p++;
-        }
-        return false;
-    }
+   // public Button createNewFolder;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -99,11 +86,6 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //createNewFolder = getView().findViewById(R.id.newFolder);
-    }
-
-    // Get extension of file
-    private String fileExt(String url) {
-        return url.substring(url.lastIndexOf(".") + 1);
     }
 
     //    @Override
@@ -133,21 +115,11 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    // Minimum the path if it is too long
-    public String minimumPath(String s){
-        if(s.length() > MAX_LENGTH_TITLE){
-            int start = s.lastIndexOf("/");
-            int end = s.length();
-            s = s.substring(0,9) + "..." + s.substring(start, end);
-        }
-        return s;
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && arePermissionDenied()) {
-            requestPermissions(PERMISSIONS, REQUEST_PERMISSIONS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Common.arePermissionDenied(this.getContext())) {
+            requestPermissions(Common.PERMISSIONS, Common.REQUEST_PERMISSIONS);
             return;
         }
 
@@ -168,6 +140,7 @@ public class HomeFragment extends Fragment {
                     pathOutput.setText(currentPath);
                     dir = new File(currentPath);
                     files = dir.listFiles();
+                    Arrays.sort(files);
                     filesFoundCount = files.length;
                     selection = new boolean[files.length];
                     textAdapter1.setData(filesList);
@@ -175,9 +148,9 @@ public class HomeFragment extends Fragment {
                     for (int i = 0; i < filesFoundCount; i++) {
                         filesList.add(String.valueOf(files[i].getAbsolutePath()));
                     }
-                    Collections.sort(filesList, String.CASE_INSENSITIVE_ORDER);
+                   // Collections.sort(filesList, String.CASE_INSENSITIVE_ORDER);
                     textAdapter1.setData(filesList);
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(minimumPath(currentPath));
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Common.minimumPath(currentPath));
                 }
             });
 
@@ -186,6 +159,7 @@ public class HomeFragment extends Fragment {
             btnAZ.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Common.reverseFileArray(files);
                     Collections.reverse(filesList);
                     textAdapter1.setData(filesList);
                 }
@@ -223,7 +197,7 @@ public class HomeFragment extends Fragment {
                                 else {
                                     MimeTypeMap myMime = MimeTypeMap.getSingleton();
                                     Intent newIntent = new Intent(Intent.ACTION_VIEW);
-                                    String mimeType = myMime.getMimeTypeFromExtension(fileExt(files[position].getAbsolutePath()));
+                                    String mimeType = myMime.getMimeTypeFromExtension(FileUtils.fileExt(files[position].getAbsolutePath()));
                                     newIntent.setDataAndType(Uri.parse(files[position].getAbsolutePath()), mimeType);
                                     newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(newIntent);
@@ -285,7 +259,7 @@ public class HomeFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             for (int i = 0; i < files.length; i++) {
                                 if (selection[i]) {
-                                    deleteFileOrFolder(files[i]);
+                                    FileUtils.deleteFileOrFolder(files[i]);
                                     selection[i] = false;
                                 }
                             }
@@ -385,7 +359,7 @@ public class HomeFragment extends Fragment {
                 public void onClick(View v) {
                     pasteButton.setVisibility(View.GONE);
                     String dstPath = currentPath + copyPath.substring(copyPath.lastIndexOf('/'));
-                    copy(new File(copyPath), new File(dstPath));
+                    FileUtils.copy(new File(copyPath), new File(dstPath));
 //                    files = new File(currentPath).listFiles();
 //                    selection = new boolean[files.length];
 //                    textAdapter1.setSelection(selection);
@@ -398,24 +372,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-
-    private void copy(File src, File dst) {
-        try {
-            InputStream in = new FileInputStream(src);
-            OutputStream out = new FileOutputStream(dst);
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            out.close();
-            in.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     class TextAdapter extends BaseAdapter {
         private List<String> data = new ArrayList<>();
@@ -485,31 +441,12 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void deleteFileOrFolder(File fileOrFolder) {
-        if (fileOrFolder.isDirectory()) {
-            if (fileOrFolder.list().length == 0) {
-                fileOrFolder.delete();
-            } else {
-                String files[] = fileOrFolder.list();
-                for (String temp : files) {
-                    File fileToDelete = new File(fileOrFolder, temp);
-                    deleteFileOrFolder(fileToDelete);
-                }
-                if (fileOrFolder.list().length == 0) {
-                    fileOrFolder.delete();
-                }
-            }
-        } else {
-            fileOrFolder.delete();
-        }
-    }
-
     @Override
     public void onRequestPermissionsResult(final int requestCode,
                                            final String[] permission, final int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permission, grantResults);
-        if (requestCode == REQUEST_PERMISSIONS && grantResults.length > 0) {
-            if (arePermissionDenied()) {
+        if (requestCode == Common.REQUEST_PERMISSIONS && grantResults.length > 0) {
+            if (Common.arePermissionDenied(this.getContext())) {
                 //((ActivityManager) Objects.requireNonNull(getActivity().getSystemService(Context.ACTIVITY_SERVICE))).clearApplicationUserData();
                 //recreate();
                 getFragmentManager()
