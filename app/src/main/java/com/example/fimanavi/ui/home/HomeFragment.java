@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -52,8 +53,8 @@ public class HomeFragment extends Fragment {
     private File[] files;
     private List<String> filesList;
     private int filesFoundCount;
-    private Button refreshButton;
-    private Button btnAZ;
+    private ImageButton refreshButton;
+    private ImageButton btnAZ;
     private File dir;
     public String currentPath = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
     private boolean isLongClick;
@@ -194,7 +195,7 @@ public class HomeFragment extends Fragment {
             refreshButton.callOnClick();
 
             // Go Back Button
-            final Button goBackButton = getView().findViewById(R.id.goBack);
+            final ImageButton goBackButton = getView().findViewById(R.id.goBack);
             goBackButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -273,7 +274,7 @@ public class HomeFragment extends Fragment {
             });
 
             // Delete button
-            final Button btnDelete = getView().findViewById(R.id.btnDelete);
+            final ImageButton btnDelete = getView().findViewById(R.id.btnDelete);
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -333,7 +334,7 @@ public class HomeFragment extends Fragment {
 //            });
 
             // Rename Button
-            final Button renameButton = getView().findViewById(R.id.btnRename);
+            final ImageButton renameButton = getView().findViewById(R.id.btnRename);
             renameButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -367,7 +368,7 @@ public class HomeFragment extends Fragment {
             });
 
             //Copy Button
-            final Button copyButton = getView().findViewById(R.id.btnCopy);
+            final ImageButton copyButton = getView().findViewById(R.id.btnCopy);
             copyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -379,7 +380,7 @@ public class HomeFragment extends Fragment {
             });
 
             // Paste Button
-            final Button pasteButton = getView().findViewById(R.id.btnPaste);
+            final ImageButton pasteButton = getView().findViewById(R.id.btnPaste);
             pasteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

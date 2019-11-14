@@ -30,58 +30,65 @@
         android:background="@color/cardview_dark_background"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/btnAZ"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_sort_alphabetically"
             android:text="AZ" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnRename"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:pointerIcon="arrow"
+            android:src="@android:drawable/ic_menu_edit"
             android:text="Rename"
             android:visibility="gone" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnCopy"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:src="?attr/actionModeCopyDrawable"
             android:text="Copy"
             android:visibility="gone" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnDelete"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:src="@android:drawable/ic_input_delete"
             android:text="Delete"
             android:visibility="gone" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnPaste"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:src="?attr/actionModePasteDrawable"
             android:text="Paste"
             android:visibility="gone" />
 
-        <Button
+        <ImageButton
             android:id="@+id/refresh"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_rotate"
             android:text="Refresh" />
 
-        <Button
+        <ImageButton
             android:id="@+id/goBack"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:src="?attr/homeAsUpIndicator"
             android:text="Back" />
 
         <!--        <Button-->
