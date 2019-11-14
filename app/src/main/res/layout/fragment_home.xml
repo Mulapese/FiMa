@@ -27,7 +27,7 @@
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#737373"
+        android:background="@color/colorPrimaryDark"
         android:orientation="horizontal">
 
         <ImageButton
@@ -35,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:src="@android:drawable/ic_menu_sort_alphabetically"
             android:text="AZ" />
 
@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:pointerIcon="arrow"
             android:src="@android:drawable/ic_menu_edit"
             android:text="Rename"
@@ -55,7 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:src="?attr/actionModeCopyDrawable"
             android:text="Copy"
             android:visibility="gone" />
@@ -65,7 +65,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:src="@android:drawable/ic_input_delete"
             android:text="Delete"
             android:visibility="gone" />
@@ -75,7 +75,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:src="?attr/actionModePasteDrawable"
             android:text="Paste"
             android:visibility="gone" />
@@ -85,7 +85,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:src="@android:drawable/ic_menu_rotate"
             android:text="Refresh" />
 
@@ -94,7 +94,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:src="@android:drawable/ic_menu_revert"
             android:text="Back" />
 
