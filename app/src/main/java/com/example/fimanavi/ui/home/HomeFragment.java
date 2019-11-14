@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -52,6 +53,7 @@ public class HomeFragment extends Fragment {
     private List<String> filesList;
     private int filesFoundCount;
     private Button refreshButton;
+    private Button btnAZ;
     private File dir;
     public String currentPath = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
     private boolean isLongClick;
@@ -173,8 +175,19 @@ public class HomeFragment extends Fragment {
                     for (int i = 0; i < filesFoundCount; i++) {
                         filesList.add(String.valueOf(files[i].getAbsolutePath()));
                     }
+                    Collections.sort(filesList, String.CASE_INSENSITIVE_ORDER);
                     textAdapter1.setData(filesList);
                     ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(minimumPath(currentPath));
+                }
+            });
+
+            // Sort AZ
+            btnAZ = getView().findViewById(R.id.btnAZ);
+            btnAZ.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Collections.reverse(filesList);
+                    textAdapter1.setData(filesList);
                 }
             });
 
