@@ -27,7 +27,7 @@
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/cardview_dark_background"
+        android:background="#737373"
         android:orientation="horizontal">
 
         <ImageButton
@@ -35,6 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/colorAccent"
             android:src="@android:drawable/ic_menu_sort_alphabetically"
             android:text="AZ" />
 
@@ -43,6 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/colorAccent"
             android:pointerIcon="arrow"
             android:src="@android:drawable/ic_menu_edit"
             android:text="Rename"
@@ -53,6 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/colorAccent"
             android:src="?attr/actionModeCopyDrawable"
             android:text="Copy"
             android:visibility="gone" />
@@ -62,6 +65,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/colorAccent"
             android:src="@android:drawable/ic_input_delete"
             android:text="Delete"
             android:visibility="gone" />
@@ -71,6 +75,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/colorAccent"
             android:src="?attr/actionModePasteDrawable"
             android:text="Paste"
             android:visibility="gone" />
@@ -80,6 +85,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/colorAccent"
             android:src="@android:drawable/ic_menu_rotate"
             android:text="Refresh" />
 
@@ -88,7 +94,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="?attr/homeAsUpIndicator"
+            android:background="@color/colorAccent"
+            android:src="@android:drawable/ic_menu_revert"
             android:text="Back" />
 
         <!--        <Button-->
