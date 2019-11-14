@@ -230,27 +230,25 @@ public class HomeFragment extends Fragment {
                     selection[position] = !selection[position];
                     textAdapter1.setSelection(selection);
                     int selectionCount = 0;
-                    getView().findViewById(R.id.bottomBar).setVisibility(View.GONE);
                     for (boolean aSelection : selection) {
                         if (aSelection) {
                             selectionCount++;
                         }
                     }
+
                     if (selectionCount > 0) {
-                        if (selectionCount == 1) {
-                            selectedItemIndex = position;
-                            getView().findViewById(R.id.btnRename).setVisibility(View.VISIBLE);
-                            if (!files[selectedItemIndex].isDirectory()) {
-                                getView().findViewById(R.id.btnCopy).setVisibility(View.VISIBLE);
-                            }
-                        } else {
-                            getView().findViewById(R.id.btnCopy).setVisibility(View.GONE);
-                            getView().findViewById(R.id.btnRename).setVisibility(View.GONE);
+                        selectedItemIndex = position;
+                        getView().findViewById(R.id.btnRename).setVisibility(View.VISIBLE);
+                        getView().findViewById(R.id.btnDelete).setVisibility(View.VISIBLE);
+                        if (!files[selectedItemIndex].isDirectory()) {
+                            getView().findViewById(R.id.btnCopy).setVisibility(View.VISIBLE);
                         }
-                        getView().findViewById(R.id.bottomBar).setVisibility(View.VISIBLE);
                     } else {
-                        getView().findViewById(R.id.bottomBar).setVisibility(View.GONE);
+                        getView().findViewById(R.id.btnCopy).setVisibility(View.GONE);
+                        getView().findViewById(R.id.btnRename).setVisibility(View.GONE);
+                        getView().findViewById(R.id.btnDelete).setVisibility(View.GONE);
                     }
+
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
