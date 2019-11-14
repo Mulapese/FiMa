@@ -12,6 +12,7 @@ import com.example.fimanavi.ui.home.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.os.Environment;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -35,8 +36,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -96,10 +101,57 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         final HomeFragment homeFragment = new HomeFragment();
         final String currentPath = homeFragment.currentPath;
+        final EditText input = new EditText(this);
 
         switch (item.getItemId()) {
             case R.id.btnNewFile:
+                AlertDialog.Builder newFileDialog = new AlertDialog.Builder(this);
+                newFileDialog.setTitle("New File");
+                final EditText filename = new EditText(this);
+                final EditText contextBox = new EditText(this);
+                filename.setHint("Title: ");
+                contextBox.setHint("Context: ");
+                filename.setInputType(InputType.TYPE_CLASS_TEXT);
+                contextBox.setInputType(InputType.TYPE_CLASS_TEXT);
 
+                LinearLayout lay = new LinearLayout(this);
+                lay.setOrientation(LinearLayout.VERTICAL);
+                lay.addView(filename);
+                lay.addView(contextBox);
+                newFileDialog.setView(lay);
+
+                newFileDialog.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FileOutputStream fos = null;
+                        try {
+                            File file = new File(currentPath + "/" +  filename.getText().toString() + ".txt");
+                            file.createNewFile();
+                            if (!file.exists()) {
+                                fos = new FileOutputStream(file);
+                                fos.write(contextBox.getText().toString().getBytes());
+                                fos.close();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        contextBox.setText("");
+                        Snackbar.make(getWindow().getDecorView(), filename.getText().toString() + ".txt saved!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+//                        File file = new File(contextBox.getFilesDir(), filename);
+//                        final File newFolder = new File(currentPath + "/" + input.getText()+".txt");
+//                        if (!newFolder.exists()) {
+//                            newFolder.mkdir();
+//                        }
+                    }
+                });
+                newFileDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                newFileDialog.show();
                 return true;
             case R.id.btnNewFolder:
 //                Snackbar.make(getWindow().getDecorView(), currentPath, Snackbar.LENGTH_LONG)
@@ -107,10 +159,9 @@ public class MainActivity extends AppCompatActivity {
 
                 AlertDialog.Builder newFolderDialog = new AlertDialog.Builder(this);
                 newFolderDialog.setTitle("New Folder");
-                final EditText input = new EditText(this);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 newFolderDialog.setView(input);
-                newFolderDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                newFolderDialog.setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         final File newFolder = new File(currentPath + "/" + input.getText());
