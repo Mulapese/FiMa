@@ -10,6 +10,11 @@
         android:name="com.example.fimanavi.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_picture"
+        android:name="com.example.fimanavi.ui.picture.PictureFragment"
+        android:label="@string/menu_picture"
+        tools:layout="@layout/fragment_picture" />
 
     <fragment
         android:id="@+id/nav_gallery"
@@ -22,6 +27,11 @@
         android:name="com.example.fimanavi.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_video"
+        android:name="com.example.fimanavi.ui.video.VideoFragment"
+        android:label="@string/menu_video"
+        tools:layout="@layout/fragment_video" />
 
     <fragment
         android:id="@+id/nav_tools"

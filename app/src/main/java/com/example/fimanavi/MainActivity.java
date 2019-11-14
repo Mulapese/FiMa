@@ -99,10 +99,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final HomeFragment homeFragment = new HomeFragment();
+        //TODO: Fix currentPath
         final String currentPath = homeFragment.currentPath;
         final EditText input = new EditText(this);
 
         switch (item.getItemId()) {
+            //TODO: Add function read file
             case R.id.btnNewFile:
                 AlertDialog.Builder newFileDialog = new AlertDialog.Builder(this);
                 newFileDialog.setTitle("New File");
@@ -124,24 +126,19 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         FileOutputStream fos = null;
                         try {
-                            File file = new File(currentPath + "/" +  filename.getText().toString() + ".txt");
+                            File file = new File(currentPath + "/" + filename.getText().toString() + ".txt");
                             file.createNewFile();
                             if (!file.exists()) {
                                 fos = new FileOutputStream(file);
+                                //TODO: Add context is failing
                                 fos.write(contextBox.getText().toString().getBytes());
                                 fos.close();
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        contextBox.setText("");
                         Snackbar.make(getWindow().getDecorView(), filename.getText().toString() + ".txt saved!", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
-//                        File file = new File(contextBox.getFilesDir(), filename);
-//                        final File newFolder = new File(currentPath + "/" + input.getText()+".txt");
-//                        if (!newFolder.exists()) {
-//                            newFolder.mkdir();
-//                        }
                     }
                 });
                 newFileDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -153,9 +150,6 @@ public class MainActivity extends AppCompatActivity {
                 newFileDialog.show();
                 return true;
             case R.id.btnNewFolder:
-//                Snackbar.make(getWindow().getDecorView(), currentPath, Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
                 AlertDialog.Builder newFolderDialog = new AlertDialog.Builder(this);
                 newFolderDialog.setTitle("New Folder");
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -167,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
                         if (!newFolder.exists()) {
                             newFolder.mkdir();
                         }
+                        Snackbar.make(getWindow().getDecorView(), input.getText().toString() + " saved!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
                     }
                 });
                 newFolderDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -177,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 });
                 newFolderDialog.show();
                 return true;
+            //TODO: Add function refresh
             case R.id.refresh:
                 return true;
             default:

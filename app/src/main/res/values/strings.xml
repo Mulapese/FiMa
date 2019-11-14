@@ -12,8 +12,11 @@
 
 
     <string name="menu_home">Home</string>
+    <string name="menu_download">Download</string>
+    <string name="menu_picture">Picture</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_video">Video</string>
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
