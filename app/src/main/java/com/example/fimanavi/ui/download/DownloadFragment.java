@@ -50,7 +50,7 @@ public class DownloadFragment extends Fragment {
     private ImageButton refreshButton;
     private ImageButton btnAZ;
     private File dir;
-    public String currentPath = Constant.DOWNLOAD_DIRECTORY;
+    public String currentPath;
     private boolean isLongClick;
     private int selectedItemIndex;
     private String copyPath;
@@ -210,6 +210,7 @@ public class DownloadFragment extends Fragment {
                                 else {
                                     MimeTypeMap myMime = MimeTypeMap.getSingleton();
                                     Intent newIntent = new Intent(Intent.ACTION_VIEW);
+//                                    newIntent.addCategory(Intent.CATEGORY_OPENABLE);
                                     String mimeType = myMime.getMimeTypeFromExtension(FileUtils.getExtension(files[position].getAbsolutePath()));
                                     newIntent.setDataAndType(Uri.parse(files[position].getAbsolutePath()), mimeType);
                                     newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
