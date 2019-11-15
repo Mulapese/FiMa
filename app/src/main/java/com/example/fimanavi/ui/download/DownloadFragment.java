@@ -15,6 +15,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -28,8 +29,11 @@ import com.example.fimanavi.Constant;
 import com.example.fimanavi.FileUtils;
 import com.example.fimanavi.ListAdapter;
 import com.example.fimanavi.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -122,6 +126,42 @@ public class DownloadFragment extends Fragment {
                     textAdapter1.setData(getActivity(), filesArray, FileUtils.getLastModified(files), FileUtils.getIcon(files));
                     listView.setAdapter(textAdapter1);
                     ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Common.minimumPath(currentPath));
+                }
+            });
+
+            // Search Button
+            ImageButton btnSearch = getView().findViewById(R.id.btnSearch);
+            btnSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final EditText input = new EditText(getContext());
+
+                    AlertDialog.Builder newFolderDialog = new AlertDialog.Builder(getContext());
+                    newFolderDialog.setTitle("Search Box");
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    newFolderDialog.setView(input);
+                    newFolderDialog.setPositiveButton("Search Now", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ArrayList<String> result = new ArrayList<>();
+                            for(int i = 0; i < filesList.size(); i++){
+                                if(FileUtils.getName(files[i]).contains(input.getText().toString())){
+                                    result.add(FileUtils.getName(files[i]));
+                                }
+                            }
+
+                            String[] filesArray = new String[result.size()];
+                            filesArray = result.toArray(filesArray);
+                            textAdapter1.setData(getActivity(), filesArray, FileUtils.getLastModified(files), FileUtils.getIcon(files));
+                        }
+                    });
+                    newFolderDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    newFolderDialog.show();
                 }
             });
 
@@ -284,7 +324,6 @@ public class DownloadFragment extends Fragment {
                     propertiesDialog.show();
                 }
             });
-
 
             // Rename Button
             final ImageButton renameButton = getView().findViewById(R.id.btnRename);
