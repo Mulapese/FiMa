@@ -82,9 +82,10 @@
         <ImageButton
             android:id="@+id/btnSearch"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_folder" />
+            app:srcCompat="@android:drawable/ic_menu_search" />
 
         <ImageButton
             android:id="@+id/refresh"
