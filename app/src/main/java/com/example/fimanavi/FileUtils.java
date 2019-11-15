@@ -91,11 +91,13 @@ public class FileUtils {
             if(files[i].isDirectory()){
                 icon[i] = R.drawable.ic_folder;
             } else {
-                if(FileUtils.getExtension(files[i].getAbsolutePath()).equals("png")){
+                if(FileUtils.getExtension(files[i].getAbsolutePath()).equals("png") ||
+                        FileUtils.getExtension(files[i].getAbsolutePath()).equals("jpg")){
                     icon[i] = R.drawable.ic_menu_gallery;
                 } else if (FileUtils.getExtension(files[i].getAbsolutePath()).equals("mp4")){
                     icon[i] = R.drawable.ic_video;
-                } else if (FileUtils.getExtension(files[i].getAbsolutePath()).equals("mp3")){
+                } else if (FileUtils.getExtension(files[i].getAbsolutePath()).equals("mp3") ||
+                        FileUtils.getExtension(files[i].getAbsolutePath()).equals("flac")){
                     icon[i] = R.drawable.ic_music;
                 } else {
                     String s = FileUtils.getExtension(files[i].getAbsolutePath());

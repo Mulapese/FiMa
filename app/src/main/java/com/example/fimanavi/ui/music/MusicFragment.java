@@ -91,7 +91,7 @@ public class MusicFragment extends Fragment {
         }
 
         if (!isFileManagerInitialized) {
-            currentPath = Constant.PICTURES_DIRECTORY;
+            currentPath = Constant.MUSIC_DIRECTORY;
             final String rootPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
             //final TextView pathOutput = getView().findViewById(R.id.pathOutput);
             final ListView listView = getView().findViewById(R.id.androidList);
