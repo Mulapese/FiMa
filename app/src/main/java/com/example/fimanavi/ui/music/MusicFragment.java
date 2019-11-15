@@ -46,7 +46,7 @@ public class MusicFragment extends Fragment {
     private ImageButton refreshButton;
     private ImageButton btnAZ;
     private File dir;
-    public String currentPath;
+    public String currentPath = Constant.PICTURES_DIRECTORY;
     private boolean isLongClick;
     private int selectedItemIndex;
     private String copyPath;
@@ -170,7 +170,6 @@ public class MusicFragment extends Fragment {
                                 else {
                                     MimeTypeMap myMime = MimeTypeMap.getSingleton();
                                     Intent newIntent = new Intent(Intent.ACTION_VIEW);
-                                    newIntent.addCategory(Intent.CATEGORY_OPENABLE);
                                     String mimeType = myMime.getMimeTypeFromExtension(FileUtils.getExtension(files[position].getAbsolutePath()));
                                     newIntent.setDataAndType(Uri.parse(files[position].getAbsolutePath()), mimeType);
                                     newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
