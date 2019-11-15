@@ -25,7 +25,7 @@
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
             android:src="@android:drawable/ic_menu_sort_alphabetically"
-            android:text="AZ" />
+            android:foreground="?android:attr/selectableItemBackground" />
 
         <ImageButton
             android:id="@+id/btnRename"
@@ -35,7 +35,7 @@
             android:background="@color/colorPrimaryDark"
             android:pointerIcon="arrow"
             android:src="@android:drawable/ic_menu_edit"
-            android:text="Rename"
+            android:foreground="?android:attr/selectableItemBackground"
             android:visibility="gone" />
 
         <ImageButton
@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
             android:src="?attr/actionModeCopyDrawable"
-            android:text="Copy"
+            android:foreground="?android:attr/selectableItemBackground"
             android:visibility="gone" />
 
         <ImageButton
@@ -54,8 +54,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
-            android:src="@android:drawable/ic_input_delete"
-            android:text="Delete"
+            android:src="@android:drawable/ic_menu_delete"
+            android:foreground="?android:attr/selectableItemBackground"
             android:visibility="gone" />
 
         <ImageButton
@@ -65,7 +65,7 @@
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
             android:src="?attr/actionModePasteDrawable"
-            android:text="Paste"
+            android:foreground="?android:attr/selectableItemBackground"
             android:visibility="gone" />
 
         <ImageButton
@@ -75,7 +75,7 @@
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
             android:src="@android:drawable/ic_menu_rotate"
-            android:text="Refresh" />
+            android:foreground="?android:attr/selectableItemBackground" />
 
         <ImageButton
             android:id="@+id/goBack"
@@ -84,7 +84,7 @@
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
             android:src="@android:drawable/ic_menu_revert"
-            android:text="Back" />
+            android:foreground="?android:attr/selectableItemBackground" />
 
         <!--        <Button-->
         <!--            android:id="@+id/btnPaste"-->
