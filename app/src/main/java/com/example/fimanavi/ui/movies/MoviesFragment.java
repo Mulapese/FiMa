@@ -222,6 +222,43 @@ public class MoviesFragment extends Fragment {
                 }
             });
 
+            // Search Button
+            ImageButton btnSearch = getView().findViewById(R.id.btnSearch);
+            btnSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final EditText input = new EditText(getContext());
+
+                    AlertDialog.Builder newFolderDialog = new AlertDialog.Builder(getContext());
+                    newFolderDialog.setTitle("Search Box");
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    newFolderDialog.setView(input);
+                    newFolderDialog.setPositiveButton("Search Now", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ArrayList<String> result = new ArrayList<>();
+                            for(int i = 0; i < filesList.size(); i++){
+                                if(FileUtils.getName(files[i]).contains(input.getText().toString())){
+                                    result.add(FileUtils.getName(files[i]));
+                                }
+                            }
+
+                            String[] filesArray = new String[result.size()];
+                            filesArray = result.toArray(filesArray);
+                            textAdapter1.setData(getActivity(), filesArray, FileUtils.getLastModified(files), FileUtils.getIcon(files));
+                        }
+                    });
+                    newFolderDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    newFolderDialog.show();
+                }
+            });
+
+
             // Delete button
             final ImageButton btnDelete = getView().findViewById(R.id.btnDelete);
             btnDelete.setOnClickListener(new View.OnClickListener() {
