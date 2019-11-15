@@ -171,7 +171,7 @@ public class MoviesFragment extends Fragment {
                                     MimeTypeMap myMime = MimeTypeMap.getSingleton();
                                     Intent newIntent = new Intent(Intent.ACTION_VIEW);
                                     newIntent.addCategory(Intent.CATEGORY_OPENABLE);
-                                    String mimeType = myMime.getMimeTypeFromExtension(FileUtils.fileExt(files[position].getAbsolutePath()));
+                                    String mimeType = myMime.getMimeTypeFromExtension(FileUtils.getExtension(files[position].getAbsolutePath()));
                                     newIntent.setDataAndType(Uri.parse(files[position].getAbsolutePath()), mimeType);
                                     newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(newIntent);
@@ -252,6 +252,37 @@ public class MoviesFragment extends Fragment {
                 }
             });
 
+            // Properties button
+            final ImageButton btnInfo = getView().findViewById(R.id.btnInfo);
+            btnInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String path = "";
+                    String name = "";
+                    int size = 0;
+                    String lastModified = "";
+                    String extension = "";
+                    String type = "";
+                    for (int i = 0; i < files.length; i++) {
+                        if (selection[i]) {
+                            path = files[i].getAbsolutePath();
+                            name = FileUtils.getName(files[i]);
+                            size = FileUtils.getSize(files[i]);
+                            lastModified = FileUtils.getLastModified(files[i]);
+                            extension = FileUtils.getExtension(files[i].getAbsolutePath());
+                            type = FileUtils.getType(files[i]);
+                        }
+                    }
+                    final AlertDialog.Builder propertiesDialog = new AlertDialog.Builder(getActivity());
+                    propertiesDialog.setTitle(name);
+                    propertiesDialog.setMessage("\nPath: " + path + "\n\n"
+                            + "Size: " + size
+                            + "B\n\nLast Modified: " + lastModified + "\n\n"
+                            + "Extension: " + extension + "\n\n"
+                            + "Type: " + type);
+                    propertiesDialog.show();
+                }
+            });
 
             // Rename Button
             final ImageButton renameButton = getView().findViewById(R.id.btnRename);

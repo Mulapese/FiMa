@@ -86,7 +86,7 @@ public class ListAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.single_list_item, parent, false);
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.aNametxt);
-            viewHolder.txtVersion = (TextView) convertView.findViewById(R.id.aVersiontxt);
+            viewHolder.txtDate = (TextView) convertView.findViewById(R.id.aVersiontxt);
             viewHolder.icon = (ImageView) convertView.findViewById(R.id.appIconIV);
 
             result = convertView;
@@ -99,7 +99,7 @@ public class ListAdapter extends BaseAdapter {
         }
 
         viewHolder.txtName.setText(name[position]);
-        viewHolder.txtVersion.setText(date[position]);
+        viewHolder.txtDate.setText(date[position]);
         viewHolder.icon.setImageResource(icon[position]);
 
         // Holder when long press
@@ -109,19 +109,22 @@ public class ListAdapter extends BaseAdapter {
         if (selection != null) {
             if (selection[position]) {
                 holder.txtName.setBackgroundColor(Color.argb(100, 202, 221, 237)); // Màu của Item khi được select
+                holder.txtDate.setBackgroundColor(Color.argb(100, 202, 221, 237));
+                holder.icon.setBackgroundColor(Color.argb(100, 202, 221, 237));
             } else {
-                holder.txtName.setBackgroundColor(Color.WHITE); // Màu của Item khi bỏ select
+                holder.txtName.setBackgroundColor(Color.WHITE);
+                holder.txtDate.setBackgroundColor(Color.WHITE);
+                holder.icon.setBackgroundColor(Color.WHITE);  // Màu của Item khi bỏ select
             }
         }
         return convertView;
-
 
     }
 
     private static class ViewHolder {
 
         TextView txtName;
-        TextView txtVersion;
+        TextView txtDate;
         ImageView icon;
 
     }

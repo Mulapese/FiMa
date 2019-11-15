@@ -1,5 +1,7 @@
 package com.example.fimanavi;
 
+import android.webkit.MimeTypeMap;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,7 +34,7 @@ public class FileUtils {
     }
 
     // Get extension of file
-    public static String fileExt(String url) {
+    public static String getExtension(String url) {
         return url.substring(url.lastIndexOf(".") + 1);
     }
 
@@ -64,20 +66,39 @@ public class FileUtils {
         return dates;
     }
 
+    public static String getLastModified(File file){
+        return new Date(file.lastModified()).toString();
+    }
+
+    public static int getSize(File file){
+        return Integer.parseInt(String.valueOf(file.length()/1024));
+    }
+
+    public static String getType(File file){
+        MimeTypeMap myMime = MimeTypeMap.getSingleton();
+        String mimeType = myMime.getMimeTypeFromExtension(FileUtils.getExtension(file.getAbsolutePath()));
+        return mimeType;
+    }
+
+    public static String getName(File file){
+        String path = file.getAbsolutePath();
+        return path.substring(path.lastIndexOf('/') + 1);
+    }
+
     public static int[] getIcon(File[] files){
         int[] icon = new int[files.length];
         for(int i = 0; i < files.length; i++){
             if(files[i].isDirectory()){
                 icon[i] = R.drawable.ic_menu_camera;
             } else {
-                if(FileUtils.fileExt(files[i].getAbsolutePath()).equals("png")){
+                if(FileUtils.getExtension(files[i].getAbsolutePath()).equals("png")){
                     icon[i] = R.drawable.ic_menu_gallery;
-                } else if (FileUtils.fileExt(files[i].getAbsolutePath()).equals("mp4")){
+                } else if (FileUtils.getExtension(files[i].getAbsolutePath()).equals("mp4")){
                     icon[i] = R.drawable.ic_menu_video;
-                } else if (FileUtils.fileExt(files[i].getAbsolutePath()).equals("mp3")){
+                } else if (FileUtils.getExtension(files[i].getAbsolutePath()).equals("mp3")){
                     icon[i] = R.drawable.ic_menu_manage;
                 } else {
-                    String s = FileUtils.fileExt(files[i].getAbsolutePath());
+                    String s = FileUtils.getExtension(files[i].getAbsolutePath());
                     icon[i] = R.drawable.ic_menu_send;
                 }
             }
