@@ -7,36 +7,26 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.fimanavi.ui.home.HomeFragment"
+        android:name="com.example.fimanavi.ui.download.DownloadFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/nav_picture"
-        android:name="com.example.fimanavi.ui.picture.PictureFragment"
-        android:label="@string/menu_picture"
-        tools:layout="@layout/fragment_picture" />
+        tools:layout="@layout/fragment_download" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.fimanavi.ui.gallery.GalleryFragment"
+        android:id="@+id/nav_pictures"
+        android:name="com.example.fimanavi.ui.pictures.PicturesFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_pictures" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.fimanavi.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
-        android:id="@+id/nav_video"
-        android:name="com.example.fimanavi.ui.video.VideoFragment"
-        android:label="@string/menu_video"
-        tools:layout="@layout/fragment_video" />
+        android:id="@+id/nav_music"
+        android:name="com.example.fimanavi.ui.music.MusicFragment"
+        android:label="Music"
+        tools:layout="@layout/fragment_music" />
 
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.example.fimanavi.ui.tools.ToolsFragment"
+        android:id="@+id/nav_movies"
+        android:name="com.example.fimanavi.ui.movies.MoviesFragment"
         android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        tools:layout="@layout/fragment_movies" />
 
 </navigation>

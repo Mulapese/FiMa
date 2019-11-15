@@ -12,4 +12,7 @@ public class Constant {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
     public static final String DOWNLOAD_DIRECTORY = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+    public static final String PICTURES_DIRECTORY = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+    public static final String MOVIES_DIRECTORY = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES));
+    public static final String MUSIC_DIRECTORY = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC));
 }

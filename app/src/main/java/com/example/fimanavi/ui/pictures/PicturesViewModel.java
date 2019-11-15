@@ -1,16 +1,16 @@
-package com.example.fimanavi.ui.tools;
+package com.example.fimanavi.ui.pictures;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ToolsViewModel extends ViewModel {
+public class PicturesViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ToolsViewModel() {
+    public PicturesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is tools fragment");
+        mText.setValue("This is gallery fragment");
     }
 
     public LiveData<String> getText() {

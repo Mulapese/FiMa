@@ -1,10 +1,8 @@
-package com.example.fimanavi.ui.home;
+package com.example.fimanavi.ui.movies;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -12,14 +10,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -28,7 +24,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -38,21 +33,14 @@ import com.example.fimanavi.FileUtils;
 import com.example.fimanavi.R;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class MoviesFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private MoviesViewModel moviesViewModel;
     private boolean isFileManagerInitialized;
     private boolean[] selection;
     private File[] files;
@@ -61,7 +49,7 @@ public class HomeFragment extends Fragment {
     private ImageButton refreshButton;
     private ImageButton btnAZ;
     private File dir;
-    public String currentPath = Constant.DOWNLOAD_DIRECTORY;
+    public String currentPath;
     private boolean isLongClick;
     private int selectedItemIndex;
     private String copyPath;
@@ -70,9 +58,9 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        moviesViewModel =
+                ViewModelProviders.of(this).get(MoviesViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_movies, container, false);
         return root;
     }
 
@@ -106,7 +94,7 @@ public class HomeFragment extends Fragment {
         }
 
         if (!isFileManagerInitialized) {
-            currentPath = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+            currentPath = Constant.MOVIES_DIRECTORY;
             final String rootPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
             //final TextView pathOutput = getView().findViewById(R.id.pathOutput);
             final ListView listView = getView().findViewById(R.id.listView);
@@ -130,7 +118,7 @@ public class HomeFragment extends Fragment {
                     for (int i = 0; i < filesFoundCount; i++) {
                         filesList.add(String.valueOf(files[i].getAbsolutePath()));
                     }
-                   // Collections.sort(filesList, String.CASE_INSENSITIVE_ORDER);
+                    // Collections.sort(filesList, String.CASE_INSENSITIVE_ORDER);
                     textAdapter1.setData(filesList);
                     ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Common.minimumPath(currentPath));
                 }
@@ -401,6 +389,7 @@ public class HomeFragment extends Fragment {
                 convertView.setTag(new ViewHolder((TextView) convertView.findViewById(R.id.textItem)));
             }
 
+            // Holder when long press
             ViewHolder holder = (ViewHolder) convertView.getTag();
             final String item = getItem(position);
             holder.info.setText(item.substring(item.lastIndexOf('/') + 1));
@@ -433,8 +422,8 @@ public class HomeFragment extends Fragment {
                 //recreate();
                 getFragmentManager()
                         .beginTransaction()
-                        .detach(HomeFragment.this)
-                        .attach(HomeFragment.this)
+                        .detach(MoviesFragment.this)
+                        .attach(MoviesFragment.this)
                         .commit();
             } else {
                 onResume();

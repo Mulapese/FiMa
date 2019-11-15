@@ -8,15 +8,12 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.example.fimanavi.ui.home.HomeFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.fimanavi.ui.download.DownloadFragment;
 import com.google.android.material.snackbar.Snackbar;
 
-import android.os.Environment;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -39,7 +36,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -69,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools)
+                R.id.nav_home, R.id.nav_pictures, R.id.nav_music,
+                R.id.nav_movies)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -98,9 +94,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        final HomeFragment homeFragment = new HomeFragment();
+        final DownloadFragment downloadFragment = new DownloadFragment();
         //TODO: Fix currentPath
-        final String currentPath = homeFragment.currentPath;
+        final String currentPath = downloadFragment.currentPath;
         final EditText input = new EditText(this);
 
         switch (item.getItemId()) {
@@ -196,8 +192,8 @@ public class MainActivity extends AppCompatActivity {
     //    @Override
 //    public boolean onKeyDown(int keyCode, KeyEvent event) {
 //        if(keyCode == KeyEvent.KEYCODE_BACK){
-//            HomeFragment homeFragment = new HomeFragment();
-//            homeFragment.myOnKeyDown(keyCode);
+//            DownloadFragment downloadFragment = new DownloadFragment();
+//            downloadFragment.myOnKeyDown(keyCode);
 //        }
 //        return super.onKeyDown(keyCode, event);
 //    }

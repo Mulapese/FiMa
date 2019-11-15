@@ -9,24 +9,16 @@
             android:icon="@android:drawable/stat_sys_download"
             android:title="@string/menu_download" />
         <item
-            android:id="@+id/nav_picture"
-            android:icon="@drawable/ic_menu_picture"
+            android:id="@+id/nav_pictures"
+            android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_picture" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_music"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:title="Music" />
         <item
-            android:id="@+id/nav_video"
+            android:id="@+id/nav_movies"
             android:icon="@drawable/ic_menu_video"
-            android:title="@string/menu_video" />
-        <item
-            android:id="@+id/nav_tools"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_tools" />
+            android:title="Movies" />
     </group>
 </menu>

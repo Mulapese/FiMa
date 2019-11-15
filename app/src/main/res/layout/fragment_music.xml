@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#FD0000"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btnAZ"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:src="@android:drawable/ic_menu_sort_alphabetically"
+            android:text="AZ" />
+
+        <ImageButton
+            android:id="@+id/btnRename"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:pointerIcon="arrow"
+            android:src="@android:drawable/ic_menu_edit"
+            android:text="Rename"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/btnCopy"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:src="?attr/actionModeCopyDrawable"
+            android:text="Copy"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:src="@android:drawable/ic_input_delete"
+            android:text="Delete"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/btnPaste"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:src="?attr/actionModePasteDrawable"
+            android:text="Paste"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/refresh"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:src="@android:drawable/ic_menu_rotate"
+            android:text="Refresh" />
+
+        <ImageButton
+            android:id="@+id/goBack"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:src="@android:drawable/ic_menu_revert"
+            android:text="Back" />
+
+        <!--        <Button-->
+        <!--            android:id="@+id/btnPaste"-->
+        <!--            android:layout_width="40dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:background="@android:color/transparent"-->
+        <!--            android:drawableStart="@drawable/ic_action_more_vert"-->
+        <!--            android:stateListAnimator="@null" />-->
+    </LinearLayout>
+
+</LinearLayout>
