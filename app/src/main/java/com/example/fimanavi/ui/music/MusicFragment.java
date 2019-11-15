@@ -3,11 +3,9 @@ package com.example.fimanavi.ui.music;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -15,11 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -30,8 +26,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.fimanavi.Common;
 import com.example.fimanavi.Constant;
 import com.example.fimanavi.FileUtils;
+import com.example.fimanavi.ListAdapter;
 import com.example.fimanavi.R;
-import com.example.fimanavi.TextAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -95,13 +91,14 @@ public class MusicFragment extends Fragment {
         }
 
         if (!isFileManagerInitialized) {
-            currentPath = Constant.MUSIC_DIRECTORY;
+            currentPath = Constant.PICTURES_DIRECTORY;
             final String rootPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
             //final TextView pathOutput = getView().findViewById(R.id.pathOutput);
-            final ListView listView = getView().findViewById(R.id.listView);
-            final TextAdapter textAdapter1 = new TextAdapter();
-            listView.setAdapter(textAdapter1);
-            filesList = new ArrayList<>();
+            final ListView listView = getView().findViewById(R.id.androidList);
+            final ListAdapter textAdapter1 = new ListAdapter();
+
+            filesList = new ArrayList<String>();
+
             // Refresh Button
             refreshButton = getView().findViewById(R.id.refresh);
             refreshButton.setOnClickListener(new View.OnClickListener() {
@@ -114,13 +111,16 @@ public class MusicFragment extends Fragment {
                     Arrays.sort(files);
                     filesFoundCount = files.length;
                     selection = new boolean[files.length];
-                    textAdapter1.setData(filesList);
+                    //textAdapter1.setData(getContext(),filesList, filesList, filesList);
                     filesList.clear();
                     for (int i = 0; i < filesFoundCount; i++) {
                         filesList.add(String.valueOf(files[i].getAbsolutePath()));
                     }
-                    // Collections.sort(filesList, String.CASE_INSENSITIVE_ORDER);
-                    textAdapter1.setData(filesList);
+                    String[] filesArray = new String[filesList.size()];
+                    filesArray = filesList.toArray(filesArray);
+
+                    textAdapter1.setData(getActivity(), filesArray, FileUtils.getLastModified(files), FileUtils.getIcon(files));
+                    listView.setAdapter(textAdapter1);
                     ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Common.minimumPath(currentPath));
                 }
             });
@@ -132,7 +132,9 @@ public class MusicFragment extends Fragment {
                 public void onClick(View view) {
                     Common.reverseFileArray(files);
                     Collections.reverse(filesList);
-                    textAdapter1.setData(filesList);
+                    String[] filesArray = new String[filesList.size()];
+                    filesArray = filesList.toArray(filesArray);
+                    textAdapter1.setData(getActivity(), filesArray, FileUtils.getLastModified(files), FileUtils.getIcon(files));
                 }
             });
 
@@ -168,10 +170,12 @@ public class MusicFragment extends Fragment {
                                 else {
                                     MimeTypeMap myMime = MimeTypeMap.getSingleton();
                                     Intent newIntent = new Intent(Intent.ACTION_VIEW);
+                                    newIntent.addCategory(Intent.CATEGORY_OPENABLE);
                                     String mimeType = myMime.getMimeTypeFromExtension(FileUtils.fileExt(files[position].getAbsolutePath()));
                                     newIntent.setDataAndType(Uri.parse(files[position].getAbsolutePath()), mimeType);
                                     newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(newIntent);
+
                                 }
                             }
                         }
@@ -248,34 +252,6 @@ public class MusicFragment extends Fragment {
                 }
             });
 
-//            // Create a new folder
-//            createNewFolder.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    final AlertDialog.Builder newFolderDialog = new AlertDialog.Builder(getActivity());
-//                    newFolderDialog.setTitle("New Folder");
-//                    final EditText input = new EditText(getActivity());
-//                    input.setInputType(InputType.TYPE_CLASS_TEXT);
-//                    newFolderDialog.setView(input);
-//                    newFolderDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            final File newFolder = new File(currentPath + "/" + input.getText());
-//                            if (!newFolder.exists()) {
-//                                newFolder.mkdir();
-//                                refreshButton.callOnClick();
-//                            }
-//                        }
-//                    });
-//                    newFolderDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.cancel();
-//                        }
-//                    });
-//                    newFolderDialog.show();
-//                }
-//            });
 
             // Rename Button
             final ImageButton renameButton = getView().findViewById(R.id.btnRename);

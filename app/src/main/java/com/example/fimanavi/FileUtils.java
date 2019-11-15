@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 
 public class FileUtils {
 
@@ -52,5 +53,35 @@ public class FileUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String[] getLastModified(File[] files){
+        String[] dates = new String[files.length];
+        for(int i = 0; i < files.length; i++) {
+            Date lastModDate = new Date(files[i].lastModified());
+            dates[i] = lastModDate.toString();
+        }
+        return dates;
+    }
+
+    public static int[] getIcon(File[] files){
+        int[] icon = new int[files.length];
+        for(int i = 0; i < files.length; i++){
+            if(files[i].isDirectory()){
+                icon[i] = R.drawable.ic_menu_camera;
+            } else {
+                if(FileUtils.fileExt(files[i].getAbsolutePath()).equals("png")){
+                    icon[i] = R.drawable.ic_menu_gallery;
+                } else if (FileUtils.fileExt(files[i].getAbsolutePath()).equals("mp4")){
+                    icon[i] = R.drawable.ic_menu_video;
+                } else if (FileUtils.fileExt(files[i].getAbsolutePath()).equals("mp3")){
+                    icon[i] = R.drawable.ic_menu_manage;
+                } else {
+                    String s = FileUtils.fileExt(files[i].getAbsolutePath());
+                    icon[i] = R.drawable.ic_menu_send;
+                }
+            }
+        }
+        return icon;
     }
 }
