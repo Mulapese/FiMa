@@ -89,17 +89,17 @@ public class FileUtils {
         int[] icon = new int[files.length];
         for(int i = 0; i < files.length; i++){
             if(files[i].isDirectory()){
-                icon[i] = R.drawable.ic_menu_camera;
+                icon[i] = R.drawable.ic_folder;
             } else {
                 if(FileUtils.getExtension(files[i].getAbsolutePath()).equals("png")){
                     icon[i] = R.drawable.ic_menu_gallery;
                 } else if (FileUtils.getExtension(files[i].getAbsolutePath()).equals("mp4")){
-                    icon[i] = R.drawable.ic_menu_video;
+                    icon[i] = R.drawable.ic_video;
                 } else if (FileUtils.getExtension(files[i].getAbsolutePath()).equals("mp3")){
-                    icon[i] = R.drawable.ic_menu_manage;
+                    icon[i] = R.drawable.ic_music;
                 } else {
                     String s = FileUtils.getExtension(files[i].getAbsolutePath());
-                    icon[i] = R.drawable.ic_menu_send;
+                    icon[i] = R.drawable.ic_document;
                 }
             }
         }

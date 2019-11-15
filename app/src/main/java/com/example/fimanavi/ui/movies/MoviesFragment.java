@@ -202,6 +202,7 @@ public class MoviesFragment extends Fragment {
                         selectedItemIndex = position;
                         getView().findViewById(R.id.btnRename).setVisibility(View.VISIBLE);
                         getView().findViewById(R.id.btnDelete).setVisibility(View.VISIBLE);
+                        getView().findViewById(R.id.btnInfo).setVisibility(View.VISIBLE);
                         if (!files[selectedItemIndex].isDirectory()) {
                             getView().findViewById(R.id.btnCopy).setVisibility(View.VISIBLE);
                         }
@@ -209,6 +210,7 @@ public class MoviesFragment extends Fragment {
                         getView().findViewById(R.id.btnCopy).setVisibility(View.GONE);
                         getView().findViewById(R.id.btnRename).setVisibility(View.GONE);
                         getView().findViewById(R.id.btnDelete).setVisibility(View.GONE);
+                        getView().findViewById(R.id.btnInfo).setVisibility(View.GONE);
                     }
 
                     new Handler().postDelayed(new Runnable() {

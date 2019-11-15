@@ -73,9 +73,11 @@
         <ImageButton
             android:id="@+id/btnInfo"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_dialog_info" />
+            android:background="@color/colorPrimaryDark"
+            android:visibility="gone"
+            app:srcCompat="@android:drawable/ic_menu_info_details" />
 
         <ImageButton
             android:id="@+id/refresh"
