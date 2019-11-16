@@ -1,2 +1,2 @@
 # FiMa
-Test
+Simple File Manager for Android
